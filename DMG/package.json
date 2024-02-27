@@ -1,0 +1,26 @@
+{
+  "name": "dmg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha --require ts-node/register test/test_case1.ts -- --appium_input https://dev-us-pao-7.headspin.io:7021/v0/51ba1b1c9f124b62b6e48cf3673ea7a1/wd/hub --udid MQS0219C16029156 --os android"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.11.20",
+    "@types/webdriverio": "^5.0.0",
+    "@wdio/cli": "^8.32.3",
+    "@wdio/local-runner": "^8.32.3",
+    "axios": "^1.6.7",
+    "ts-node": "^10.9.2",
+    "webdriverio": "^8.32.3",
+    "yargs": "^17.7.2"
+  }
+}

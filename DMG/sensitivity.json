@@ -1,0 +1,12 @@
+{
+    "demo_test":{
+        "default":{
+            "LaunchApp":{
+                "start_sensitivity":0.835,
+                "end_sensitivity":0.973,
+                "segment_start":0,
+                "segment_end":5
+            }
+        }
+    }
+}
