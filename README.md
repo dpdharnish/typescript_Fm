@@ -1,7 +1,7 @@
 # TypeScript Framework
 
 ## Overview
-This TypeScript framework is designed for automated testing of web applications. It utilizes the power of TypeScript along with popular testing libraries such as Jest to provide a robust testing solution for your projects.
+This TypeScript framework is designed for automated testing of Mobile applications. It utilizes the power of TypeScript.
 
 ## Features
 - **TypeScript Support**: Write tests in TypeScript for better type safety and code maintainability.
