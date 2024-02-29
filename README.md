@@ -1,6 +1,24 @@
-# Typescript Framework
-## Install node.js 
-## Command to install library
-### npm install
-## Command to run test
-### npx ts-node test/test_case1.ts --appium_input <appium_url> --udid <udid> --os <android/ios>
+# TypeScript Framework
+
+## Overview
+This TypeScript framework is designed for automated testing of web applications. It utilizes the power of TypeScript along with popular testing libraries such as Jest to provide a robust testing solution for your projects.
+
+## Features
+- **TypeScript Support**: Write tests in TypeScript for better type safety and code maintainability.
+- **Easy Setup**: Simple setup process using npm for installing dependencies.
+- **Customizable**: Easily customizable to fit the specific needs of your project.
+
+## Prerequisites
+Before getting started, ensure you have the following installed on your system:
+- Node.js
+- npm (Node Package Manager)
+
+## Installation
+To install the required dependencies, run the following command in your terminal:
+```bash
+npm install
+```
+## Command to run the test case 
+```bash
+npx ts-node test/testcase2_ios.ts --appium_input <appium_url> --udid <udid> --os <os_version>
+```
