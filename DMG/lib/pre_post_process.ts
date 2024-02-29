@@ -1,14 +1,20 @@
+/*-------------------------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------------- import librarys ------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------------------------------------------------*/
 import yargs, { number } from 'yargs';
 import { Data, ParsedArgs } from './types';
 import { URL } from 'url';
 import { remote, RemoteOptions } from 'webdriverio';
 import { kpi } from './kpi'
 import * as fs from 'fs/promises';
+import { LogInfo, LogError } from './logger';
+
+
 export default class ApiProcess {
     status = "Failed"
     failreason = "Failed to Launch"
     totalcount = 4;
-    passcount = 4 ;
+    passcount = 0 ;
     apkversion: string = ""; // Assign default values or initialize in the constructor
     no_reset: boolean = false;
     autolaunch: boolean = false;
@@ -61,10 +67,9 @@ export default class ApiProcess {
             const jsonString = await fs.readFile('sensitivity.json', 'utf-8');
             const jsonData = JSON.parse(jsonString);
             const testData = jsonData?.[this.test_name]?.[this.data['udid']] ?? jsonData?.[this.test_name]?.default;
-            console.log(testData);
             this.data['sensitivity'] = testData;
         } catch (error) {
-            console.error('Error reading JSON file:', error);
+            LogError(`Error reading JSON file: ${error}`);
         }
     }
 
@@ -78,6 +83,7 @@ export default class ApiProcess {
             'appium:noReset': this.data['no_reset'],
             'headspin:capture.video': true,
             'headspin:capture.network': true,
+            // 'appium:autoLaunch':this.data['autolaunch']
         };
         if (this.data['os']==='android') {
             capabilities['appium:appPackage'] = this.data['packages'];
@@ -88,14 +94,17 @@ export default class ApiProcess {
             capabilities['appium:bundleId'] = this.data['packages'];
             capabilities['appium:automationName'] = "XCUITest";
         }
-        console.log(capabilities)
+        // console.log(capabilities)
+        LogInfo(`${capabilities}`)
         const url = new URL(this.data['appium-url']);
         const options: RemoteOptions = {
             hostname: url.hostname,
             port: Number(url.port), 
             path: url.pathname,
             capabilities,
-            protocol: url.protocol.replace(':', ''),       
+            protocol: url.protocol.replace(':', ''),
+            logLevel: 'error',
+            connectionRetryCount: 0      
         };
         try {
             const driver = await remote(options);
@@ -104,8 +113,8 @@ export default class ApiProcess {
             this.data['kpi'] = kpi
             return { code: 200, driver };
         } catch (error) {
-            console.error('Error creating WebDriver:', error);
-            return { code: 500, error }; // Use an appropriate error code
+            LogError(`Error creating WebDriver: ${error}`);
+            return { code: 500, error }; 
         }   
     }
 

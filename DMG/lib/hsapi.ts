@@ -1,7 +1,19 @@
+/*-------------------------------------------------------------------------------------------------------------------------*/
+/*-------------------------------------------- import librarys ------------------------------------------------------------*/
+/*-------------------------------------------------------------------------------------------------------------------------*/
 import axios, { AxiosResponse } from 'axios';
+import { LogInfo, LogError } from './logger';
+
+/*-------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------- Headspin API class --------------------------------------------------------*/
+/*-------------------------------------------------------------------------------------------------------------------------*/
+
 export default class HsApi {
     auth:{username:string,password:string};
     base_url = ""
+
+/*--------------------------------------------- constructor ---------------------------------------------------------------*/
+
     constructor(username:string,password:string) {
         this.auth = {
             username: username,
@@ -9,6 +21,7 @@ export default class HsApi {
         }
         this.base_url = "https://api-dev.headspin.io/v0/"
     }
+/*--------------------------------------------- get_capture_timestamp -------------------------------------------------------*/
 
     async get_capture_timestamp(SessionId:String): Promise<Record<string, any> | null> {
         const requestUrl = `${this.base_url}sessions/${SessionId}/timestamps`;
@@ -20,10 +33,13 @@ export default class HsApi {
                 return null;
             }
         } catch (error) {
-            console.error(error);
+            LogError(`${error}`)
             return null;
         }
     }
+
+/*--------------------------------------------- add_label ---------------------------------------------------------------------*/
+
     async add_label(SessionID:string,LabelName:string,Category:string,S_time:number,E_time:number):Promise<any | null> {
         const requestUrl = `${this.base_url}sessions/${SessionID}/label/add`;
         const dataPayload = {
@@ -43,10 +59,13 @@ export default class HsApi {
                 return null;
             }
         } catch (error) {
-            console.error(error);
+            LogError(`${error}`)
             return null;
         }
     }
+
+/*--------------------------------------------- get_pageloadtime -----------------------------------------------------------------*/
+
     async get_pageloadtime(SessionId: string,kpiName:string,label_start_time:number,label_end_time:number,start_sensitivity:number,end_sensitivity:number,video_box:number):Promise<any | null> {
         const requestUrl=`${this.base_url}sessions/analysis/pageloadtime/${SessionId}`;
         const dataPayload = {
@@ -66,34 +85,35 @@ export default class HsApi {
             if (response.status === 200) {
                 return response.data;
             } else {
-                console.error(`HTTP Request failed with response code: ${response.status}`);
-                console.error(response.data);
+                LogError(`HTTP Request failed with response code: ${response.status}`)
                 return null; 
             }
         } catch (error) {
-            console.error(error);
+            LogError(`${error}`)
             return null; 
         }
 
     }
+
+/*--------------------------------------------- add_session_data -----------------------------------------------------------------------*/
 
     async add_session_data(session_data: any | null) {
         const requestUrl = `${this.base_url}perftests/upload`;
         try {
             const response: AxiosResponse = await axios.post(requestUrl, session_data, { auth: this.auth });
             if (response.status === 200) {
-                console.log(response.data);
                 return response.data;
             } else {
-                console.error(`HTTP Request failed with response code: ${response.status}`);
-                console.error(response.data);
-                return null;
+                LogError(`HTTP Request failed with response code: ${response.status}`)
+                return null; 
             }
         } catch (error) {
-            console.error(error);
-            return null;
+            LogError(`${error}`)
+            return null; 
         }
     }
+
+/*--------------------------------------------- update_session_name_and_description -------------------------------------------------------*/
 
     async update_session_name_and_description(data:string,sessionId:string,testname:string): Promise<string | null> {
         const requestUrl: string = `${this.base_url}sessions/${sessionId}/description`;
@@ -105,38 +125,35 @@ export default class HsApi {
         const response: AxiosResponse = await axios.post(requestUrl, dataPayload, { auth: this.auth });
 
             if (response.status === 200) {
-                console.log(response.data);
                 return response.data;
             } else {
-                console.error(`HTTP Request failed with response code: ${response.status}`);
-                console.error(response.data);
-                return null;
+                LogError(`HTTP Request failed with response code: ${response.status}`)
+                return null; 
             }
         } catch (error) {
-            console.error(error);
+            LogError(`${error}`)
             return null;
         }     
     }
+
+/*--------------------------------------------- add_session_tags ---------------------------------------------------------------------------*/
 
     async add_session_tags(session_id:string,data: { key: string; value: string | number }[]) {
         const requestUrl: string = `${this.base_url}sessions/tags/${session_id}`;
         const tagsPayload = {
             tags: data.map(tag => ({ [tag.key]: tag.value }))
         };
-        console.log(tagsPayload)
         try {
             const response: AxiosResponse = await axios.post(requestUrl, tagsPayload, { auth: this.auth });
 
             if (response.status === 200) {
-                console.log(response.data);
                 return response.data;
             } else {
-                console.error(`HTTP Request failed with response code: ${response.status}`);
-                console.error(response.data);
-                return null;
+                LogError(`HTTP Request failed with response code: ${response.status}`)
+                return null; 
             }
         } catch (error) {
-            console.error(error);
+            LogError(`${error}`)
             return null;
         }
     }

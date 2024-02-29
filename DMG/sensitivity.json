@@ -1,11 +1,49 @@
 {
-    "demo_test":{
+    "Test002 MOL iOS":{
         "default":{
             "LaunchApp":{
                 "start_sensitivity":0.835,
-                "end_sensitivity":0.973,
-                "segment_start":0,
-                "segment_end":5
+                "end_sensitivity":0.902
+            },
+            "SearchTime":{
+                "start_sensitivity":0.978,
+                "end_sensitivity":0.978
+            }
+        }
+    },
+    "Test002 MOL Android":{
+        "default":{
+            "LaunchApp":{
+                "start_sensitivity":0.835,
+                "end_sensitivity":0.978
+            },
+            "SearchTime":{
+                "start_sensitivity":0.978,
+                "end_sensitivity":0.978
+            }
+        }
+    },
+    "Test001 MOL Android":{
+        "default":{
+            "LaunchApp":{
+                "start_sensitivity":0.835,
+                "end_sensitivity":0.978
+            },
+            "ArticlePageLoadTime":{
+                "start_sensitivity":0.978,
+                "end_sensitivity":0.978
+            }
+        }
+    },
+    "Test001 MOL iOS":{
+        "default":{
+            "LaunchApp":{
+                "start_sensitivity":0.835,
+                "end_sensitivity":0.902
+            },
+            "ArticlePageLoadTime":{
+                "start_sensitivity":0.978,
+                "end_sensitivity":0.978
             }
         }
     }
