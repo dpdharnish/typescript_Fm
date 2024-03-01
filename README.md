@@ -20,5 +20,8 @@ npm install
 ```
 ## Command to run the test case 
 ```bash
+cd DMG
+```
+```bash
 npx ts-node test/testcase2_ios.ts --appium_input <appium_url> --udid <udid> --os <os_version>
 ```
